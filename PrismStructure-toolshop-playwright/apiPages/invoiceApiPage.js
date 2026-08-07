@@ -2,10 +2,13 @@ const { BaseApiPage } = require('./baseApiPage');
 
 class InvoiceApiPage extends BaseApiPage {
   async createInvoice(invoicePayload, token) {
-    return this.post('/invoices', {
-      headers: this.authHeaders(token),
-      data: invoicePayload,
-    });
+    const options = { data: invoicePayload };
+
+    if (token) {
+      options.headers = this.authHeaders(token);
+    }
+
+    return this.post('/invoices', options);
   }
 
   async getInvoices(token) {

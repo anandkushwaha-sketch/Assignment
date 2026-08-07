@@ -14,6 +14,10 @@ class AuthApiPage extends BaseApiPage {
   }
 
   async getCurrentUser(token) {
+    if (!token) {
+      return this.get('/users/me');
+    }
+
     return this.get('/users/me', {
       headers: this.authHeaders(token),
     });
