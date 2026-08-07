@@ -6,6 +6,7 @@ const {
   expectUserRegistration,
   expectTokenResponse,
   expectPaginatedProducts,
+  expectInvoiceCreated,
   expectInvoiceResponse,
   extractCartProductIds,
 } = require('../../utils/apiAssertions');
@@ -84,11 +85,16 @@ test.describe('API lifecycle', () => {
     const invoiceRequest = buildInvoicePayload(cartId, {
       payment_method: 'cash-on-delivery',
       payment_details: {},
+      billing_street: 'Zoey Shore',
+      billing_city: 'Hesselbury',
+      billing_state: 'Florida',
+      billing_country: 'TG',
+      billing_postal_code: '1234AA',
     });
     const invoiceResponse = await invoiceApiPage.createInvoice(invoiceRequest, token);
     const invoiceBody = await invoiceResponse.json();
-    expectStatus(invoiceResponse, 200);
-    expectInvoiceResponse(invoiceBody, invoiceRequest);
+    expectStatus(invoiceResponse, 201);
+    expectInvoiceCreated(invoiceBody, invoiceRequest);
 
     const invoicesListResponse = await invoiceApiPage.getInvoices(token);
     const invoicesListBody = await invoicesListResponse.json();

@@ -1,4 +1,5 @@
 const { BasePage } = require('./basePage');
+const { expect } = require('@playwright/test');
 
 class ProfilePage extends BasePage {
   constructor(page) {
@@ -15,6 +16,8 @@ class ProfilePage extends BasePage {
   }
 
   async getProfileDetails() {
+    await expect(this.firstNameField).not.toHaveValue('', { timeout: 15_000 });
+
     return {
       firstName: await this.firstNameField.inputValue(),
       lastName: await this.lastNameField.inputValue(),

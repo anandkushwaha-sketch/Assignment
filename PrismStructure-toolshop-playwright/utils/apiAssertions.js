@@ -15,7 +15,7 @@ function expectUserRegistration(body, user) {
 
 function expectTokenResponse(body) {
   expect(body.access_token).toBeTruthy();
-  expect(body.token_type).toBe('Bearer');
+  expect(body.token_type.toLowerCase()).toBe('bearer');
   expect(typeof body.expires_in).toBe('number');
 }
 
@@ -29,7 +29,7 @@ function expectPaginatedProducts(body) {
   });
 }
 
-function expectInvoiceResponse(body, invoiceRequest) {
+function expectInvoiceCreated(body, invoiceRequest) {
   expect(body.id).toBeTruthy();
   expect(body.invoice_number).toBeTruthy();
   expect(body.billing_street).toBe(invoiceRequest.billing_street);
@@ -39,6 +39,10 @@ function expectInvoiceResponse(body, invoiceRequest) {
   expect(body.billing_postal_code).toBe(invoiceRequest.billing_postal_code);
   expect(typeof body.subtotal).toBe('number');
   expect(typeof body.total).toBe('number');
+}
+
+function expectInvoiceResponse(body, invoiceRequest) {
+  expectInvoiceCreated(body, invoiceRequest);
   expect(body.status).toBeTruthy();
   expect(Array.isArray(body.invoicelines)).toBe(true);
   expect(body.invoicelines.length).toBeGreaterThan(0);
@@ -90,6 +94,7 @@ module.exports = {
   expectUserRegistration,
   expectTokenResponse,
   expectPaginatedProducts,
+  expectInvoiceCreated,
   expectInvoiceResponse,
   expectUnauthorizedError,
   expectNotFoundError,

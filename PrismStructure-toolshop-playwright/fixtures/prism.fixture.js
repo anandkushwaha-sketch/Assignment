@@ -75,14 +75,27 @@ const test = base.extend({
   inStockProducts: async ({ productApiPage }, use) => {
     const response = await productApiPage.getProducts();
     const body = await response.json();
-    const products = (body.data || body).filter((product) => product.in_stock);
+    const products = (body.data || body).filter((product) => product.in_stock === true);
 
     if (products.length < 2) {
       throw new Error('Need at least two in-stock products for purchase flow test');
     }
 
+    const prioritizedProducts = [
+      ...products.filter((product) => product.name === 'Pliers'),
+      ...products.filter((product) => product.name !== 'Pliers'),
+    ];
+
+    const distinctProducts = prioritizedProducts.filter(
+      (product, index, all) => all.findIndex((candidate) => candidate.id === product.id) === index
+    );
+
+    if (distinctProducts.length < 2) {
+      throw new Error('Need at least two distinct in-stock products for purchase flow test');
+    }
+
     await use(
-      products.slice(0, 2).map((product) => ({
+      distinctProducts.slice(0, 6).map((product) => ({
         id: product.id,
         name: product.name,
         price: product.price,
@@ -101,8 +114,16 @@ const test = base.extend({
       name: product.name,
     });
   },
-  billingData: async ({}, use) => {
-    await use(buildBillingAddress());
+  billingData: async ({ authenticatedUser }, use) => {
+    await use(
+      buildBillingAddress({
+        billing_street: authenticatedUser.address.street,
+        billing_city: authenticatedUser.address.city,
+        billing_state: authenticatedUser.address.state,
+        billing_country: authenticatedUser.address.country,
+        billing_postal_code: authenticatedUser.address.postal_code,
+      })
+    );
   },
   invoicePayload: async ({}, use) => {
     await use((cartId, overrides = {}) => buildInvoicePayload(cartId, overrides));

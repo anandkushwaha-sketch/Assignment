@@ -3,8 +3,10 @@ const { BasePage } = require('./basePage');
 class CartPage extends BasePage {
   constructor(page) {
     super(page);
-    this.cartIcon = page.getByTestId('nav-cart');
-    this.cartItems = page.locator('[data-test="cart-item"], table tbody tr, .cart-item');
+    this.cartIcon = page.getByRole('link', { name: /cart/i });
+    this.cartItems = page.getByRole('row').filter({
+      has: page.getByRole('spinbutton', { name: /quantity for/i }),
+    });
     this.quantityInputs = page.locator('input[type="number"], [data-test="product-quantity"]');
     this.lineTotals = page.locator('[data-test="line-total"], .line-total, td.text-end');
     this.subtotal = page.getByText(/subtotal|total/i).locator('..').locator('span, strong, td').last();
@@ -16,6 +18,7 @@ class CartPage extends BasePage {
   async openCart() {
     await this.goto('/checkout');
     await this.waitForPageLoad();
+    await this.cartItems.first().waitFor({ state: 'visible', timeout: 15_000 }).catch(() => {});
   }
 
   async getCartBadgeCount() {

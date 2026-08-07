@@ -1,4 +1,5 @@
 const { BasePage } = require('./basePage');
+const { expect } = require('@playwright/test');
 const { confirmInvoiceTwice } = require('../utils/checkoutHelper');
 
 class CheckoutPage extends BasePage {
@@ -9,13 +10,13 @@ class CheckoutPage extends BasePage {
     this.billingState = page.getByLabel(/state/i);
     this.billingCountry = page.getByLabel(/country/i);
     this.billingPostalCode = page.getByLabel(/postal|zip/i);
-    this.cashOnDeliveryOption = page.getByLabel(/cash on delivery/i).or(
-      page.getByRole('radio', { name: /cash on delivery/i })
-    ).or(page.getByText(/cash on delivery/i));
+    this.cashOnDeliveryOption = page.getByLabel(/payment method/i);
     this.confirmButton = page.getByRole('button', { name: /confirm/i });
-    this.proceedButton = page.getByRole('button', { name: /proceed|next|continue/i });
+    this.proceedButton = page.getByRole('button', { name: /proceed|checkout|next|continue/i });
+    this.billingHeading = page.getByRole('heading', { name: /billing address/i });
+    this.paymentHeading = page.getByRole('heading', { name: /payment/i });
     this.emptyCartMessage = page.getByText(/cart is empty|no items|add products|your cart is empty/i);
-    this.successMessage = page.getByRole('alert').or(page.getByText(/invoice|order|success/i));
+    this.successMessage = page.getByRole('alert').or(page.getByText(/invoice|order|success|thank you/i));
   }
 
   async open() {
@@ -23,40 +24,78 @@ class CheckoutPage extends BasePage {
     await this.waitForPageLoad();
   }
 
-  async proceedToBillingIfNeeded() {
-    const maxSteps = 3;
-    for (let step = 0; step < maxSteps; step += 1) {
-      if (await this.billingStreet.isVisible()) {
+  async advanceCheckoutStep(stepHeading) {
+    for (let step = 0; step < 6; step += 1) {
+      if (await stepHeading.isVisible()) {
         return;
       }
 
-      if (await this.proceedButton.isVisible()) {
-        await this.proceedButton.click();
+      const proceedButton = this.proceedButton.first();
+      if (await proceedButton.isVisible()) {
+        await proceedButton.click();
       }
     }
 
-    await this.billingStreet.waitFor({ state: 'visible' });
+    await stepHeading.waitFor({ state: 'visible' });
+  }
+
+  async proceedToBillingIfNeeded() {
+    await this.advanceCheckoutStep(this.billingHeading);
   }
 
   async fillBillingAddress(billing) {
-    await this.billingStreet.fill(billing.billing_street);
-    await this.billingCity.fill(billing.billing_city);
-    await this.billingState.fill(billing.billing_state);
-    await this.billingCountry.fill(billing.billing_country);
+    if (await this.billingCountry.isVisible()) {
+      if (await this.billingCountry.evaluate((element) => element.tagName === 'SELECT')) {
+        await this.billingCountry.selectOption({ label: billing.billing_country });
+      } else {
+        await this.billingCountry.fill(billing.billing_country);
+      }
+    }
+
     await this.billingPostalCode.fill(billing.billing_postal_code);
+    await expect(this.billingStreet).not.toHaveValue('', { timeout: 10_000 });
+
+    const streetValue = await this.billingStreet.inputValue();
+    if (!streetValue) {
+      await this.billingStreet.fill(billing.billing_street);
+    }
+
+    const cityValue = await this.billingCity.inputValue();
+    if (!cityValue) {
+      await this.billingCity.fill(billing.billing_city);
+    }
+
+    const stateValue = await this.billingState.inputValue();
+    if (!stateValue) {
+      await this.billingState.fill(billing.billing_state);
+    }
+  }
+
+  async proceedToPaymentIfNeeded() {
+    await this.advanceCheckoutStep(this.paymentHeading);
   }
 
   async selectCashOnDelivery() {
-    await this.cashOnDeliveryOption.click();
+    await this.cashOnDeliveryOption.selectOption('cash-on-delivery');
   }
 
   async confirmOrderTwice() {
     await confirmInvoiceTwice(this.page, this.confirmButton);
+    await expect(this.page.getByText(/thanks for your order|invoice number is/i)).toBeVisible({
+      timeout: 15_000,
+    });
   }
 
   async completeCashOnDeliveryCheckout(billing) {
     await this.proceedToBillingIfNeeded();
     await this.fillBillingAddress(billing);
+
+    const billingProceed = this.proceedButton.first();
+    if (await billingProceed.isVisible()) {
+      await billingProceed.click();
+    }
+
+    await this.proceedToPaymentIfNeeded();
     await this.selectCashOnDelivery();
     await this.confirmOrderTwice();
   }

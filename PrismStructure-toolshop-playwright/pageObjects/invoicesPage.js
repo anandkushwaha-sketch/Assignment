@@ -4,7 +4,9 @@ class InvoicesPage extends BasePage {
   constructor(page) {
     super(page);
     this.pageTitle = page.getByTestId('page-title');
-    this.invoiceRows = page.locator('table tbody tr, [data-test="invoice-row"], .invoice-item');
+    this.invoiceRows = page.locator('table tbody tr').filter({
+      has: page.getByRole('link'),
+    });
     this.invoiceTable = page.locator('table');
   }
 
@@ -27,8 +29,12 @@ class InvoicesPage extends BasePage {
     await firstRow.click();
   }
 
+  invoiceProductsTable() {
+    return this.page.getByRole('heading', { name: /^products$/i }).locator('..').getByRole('table');
+  }
+
   invoiceDetailContent() {
-    return this.page.locator('main, .invoice-detail, [data-test="invoice-detail"]').first();
+    return this.page.locator('h3').filter({ hasText: /general information/i }).first().locator('../..');
   }
 }
 

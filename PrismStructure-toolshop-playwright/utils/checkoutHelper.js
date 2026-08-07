@@ -7,6 +7,7 @@ async function confirmInvoiceTwice(page, confirmButton) {
 
   await button.waitFor({ state: 'visible' });
   await button.click();
+  await page.getByText('Payment was successful').waitFor({ state: 'visible' });
   await button.waitFor({ state: 'visible' });
   await button.click();
 }

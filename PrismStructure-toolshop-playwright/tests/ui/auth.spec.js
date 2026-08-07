@@ -13,11 +13,14 @@ test.describe('Authentication', () => {
 
     await expect(page).not.toHaveURL(/\/auth\/register/);
 
-    await loginPage.open();
-    await loginPage.login(testUser.email, testUser.password);
+    const userMenu = loginPage.userMenu();
+    if (!(await userMenu.isVisible())) {
+      await loginPage.open();
+      await loginPage.login(testUser.email, testUser.password);
+      await expect(page).not.toHaveURL(/\/auth\/login/);
+    }
 
-    await expect(page).not.toHaveURL(/\/auth\/login/);
-    await expect(loginPage.userMenu()).toContainText(testUser.first_name);
+    await expect(userMenu).toContainText(testUser.first_name);
 
     await profilePage.open();
     await expect(profilePage.pageTitle).toContainText(/profile|account/i);

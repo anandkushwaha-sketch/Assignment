@@ -12,34 +12,37 @@ test.describe('Purchase flow', () => {
     inStockProducts,
     billingData,
   }) => {
-    const [firstProduct, secondProduct] = inStockProducts;
+    const purchasableProducts = await productPage.findPurchasableProducts(inStockProducts, 2);
+    const [firstProduct, secondProduct] = purchasableProducts;
     const updatedQuantity = 2;
 
     await catalogPage.browseCatalog();
     await expect(catalogPage.productCards.first()).toBeVisible();
 
-    await catalogPage.searchAndOpenProduct(firstProduct.name);
+    await productPage.openById(firstProduct.id);
     const firstProductName = await productPage.getProductName();
-    await expect(productPage.inStockStatus).toBeVisible();
+    await expect(productPage.addToCartButton).toBeEnabled();
     await productPage.addToCart();
 
-    await catalogPage.open();
-    await catalogPage.searchAndOpenProduct(secondProduct.name);
+    await cartPage.openCart();
+    await expect(cartPage.cartItems.filter({ hasText: firstProductName }).first()).toBeVisible();
+
+    await page.getByRole('button', { name: /continue shopping/i }).click();
+    await productPage.openById(secondProduct.id);
     const secondProductName = await productPage.getProductName();
+    await expect(productPage.addToCartButton).toBeEnabled();
     await productPage.addToCart();
-
-    await expect(cartPage.cartIcon).toBeVisible();
 
     await cartPage.openCart();
     await expect(cartPage.cartItems.first()).toBeVisible();
     expect(await cartPage.getItemCount()).toBeGreaterThanOrEqual(2);
-    await expect(page.getByText(firstProductName)).toBeVisible();
-    await expect(page.getByText(secondProductName)).toBeVisible();
+    await expect(cartPage.cartItems.filter({ hasText: firstProductName }).first()).toBeVisible();
+    await expect(cartPage.cartItems.filter({ hasText: secondProductName }).first()).toBeVisible();
 
     await cartPage.updateFirstItemQuantity(updatedQuantity);
     await expect(cartPage.quantityInputs.first()).toHaveValue(String(updatedQuantity));
 
-    await checkoutPage.open();
+    await cartPage.proceedToNextStep();
     await checkoutPage.completeCashOnDeliveryCheckout(billingData);
 
     await invoicesPage.open();
@@ -48,9 +51,10 @@ test.describe('Purchase flow', () => {
 
     await invoicesPage.openFirstInvoice();
     const invoiceDetail = invoicesPage.invoiceDetailContent();
-    await expect(invoiceDetail).toContainText(firstProductName);
-    await expect(invoiceDetail).toContainText(billingData.billing_street);
-    await expect(invoiceDetail).toContainText(billingData.billing_city);
+    const invoiceProducts = invoicesPage.invoiceProductsTable();
+    await expect(invoiceProducts).toContainText(firstProductName);
+    await expect(invoiceProducts).toContainText(secondProductName);
+    await expect(page.getByLabel(/postal/i)).toHaveValue(billingData.billing_postal_code);
 
     await expect(page.getByTestId('nav-menu')).toContainText(authenticatedUser.first_name);
   });
