@@ -3,8 +3,9 @@ const { BasePage } = require('./basePage');
 class InvoicesPage extends BasePage {
   constructor(page) {
     super(page);
-    this.invoiceRows = page.locator('[data-test="invoice-row"], table tbody tr, .invoice-item');
-    this.invoiceList = page.locator('[data-test="invoice-list"], .invoice-list');
+    this.pageTitle = page.getByTestId('page-title');
+    this.invoiceRows = page.locator('table tbody tr, [data-test="invoice-row"], .invoice-item');
+    this.invoiceTable = page.locator('table');
   }
 
   async open() {
@@ -16,8 +17,18 @@ class InvoicesPage extends BasePage {
     return this.invoiceRows.count();
   }
 
-  firstInvoiceLink() {
-    return this.invoiceRows.first().getByRole('link').or(this.invoiceRows.first());
+  async openFirstInvoice() {
+    const firstRow = this.invoiceRows.first();
+    const link = firstRow.getByRole('link').first();
+    if (await link.isVisible()) {
+      await link.click();
+      return;
+    }
+    await firstRow.click();
+  }
+
+  invoiceDetailContent() {
+    return this.page.locator('main, .invoice-detail, [data-test="invoice-detail"]').first();
   }
 }
 

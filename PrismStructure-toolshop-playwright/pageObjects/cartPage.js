@@ -3,31 +3,45 @@ const { BasePage } = require('./basePage');
 class CartPage extends BasePage {
   constructor(page) {
     super(page);
-    this.cartItems = page.locator('[data-test="cart-item"], .cart-item, table tbody tr');
-    this.quantityInput = page.locator('input[type="number"], [data-test="product-quantity"]').first();
-    this.increaseButton = page.getByRole('button', { name: /\+|increase/i }).first();
-    this.decreaseButton = page.getByRole('button', { name: /-|decrease/i }).first();
-    this.checkoutButton = page.getByRole('link', { name: /checkout|proceed/i }).or(
-      page.getByRole('button', { name: /checkout|proceed/i })
+    this.cartIcon = page.getByTestId('nav-cart');
+    this.cartItems = page.locator('[data-test="cart-item"], table tbody tr, .cart-item');
+    this.quantityInputs = page.locator('input[type="number"], [data-test="product-quantity"]');
+    this.lineTotals = page.locator('[data-test="line-total"], .line-total, td.text-end');
+    this.subtotal = page.getByText(/subtotal|total/i).locator('..').locator('span, strong, td').last();
+    this.proceedButton = page.getByRole('button', { name: /proceed|checkout|next/i }).or(
+      page.getByRole('link', { name: /proceed|checkout|next/i })
     );
-    this.cartIcon = page.locator('[data-test="nav-cart"], a[href*="cart"], .fa-cart-shopping').first();
   }
 
   async openCart() {
-    if (await this.cartIcon.isVisible().catch(() => false)) {
-      await this.cartIcon.click();
-      return;
-    }
     await this.goto('/checkout');
+    await this.waitForPageLoad();
   }
 
-  async proceedToCheckout() {
-    await this.checkoutButton.click();
+  async getCartBadgeCount() {
+    const badgeText = await this.cartIcon.innerText();
+    const count = parseInt(badgeText.replace(/\D/g, ''), 10);
+    return Number.isNaN(count) ? 0 : count;
   }
 
-  async setQuantity(quantity) {
-    await this.quantityInput.fill(String(quantity));
-    await this.quantityInput.press('Tab');
+  async getItemCount() {
+    return this.cartItems.count();
+  }
+
+  async updateFirstItemQuantity(quantity) {
+    const quantityInput = this.quantityInputs.first();
+    await quantityInput.fill(String(quantity));
+    await quantityInput.press('Tab');
+  }
+
+  async getFirstItemQuantity() {
+    return parseInt(await this.quantityInputs.first().inputValue(), 10);
+  }
+
+  async proceedToNextStep() {
+    if (await this.proceedButton.isVisible()) {
+      await this.proceedButton.click();
+    }
   }
 }
 

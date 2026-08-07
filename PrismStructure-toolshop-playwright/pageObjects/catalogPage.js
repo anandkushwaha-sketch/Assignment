@@ -5,12 +5,17 @@ class CatalogPage extends BasePage {
     super(page);
     this.searchInput = page.getByPlaceholder(/search/i);
     this.searchButton = page.getByRole('button', { name: /search/i });
-    this.productCards = page.locator('.card, [data-test="product-name"], .product');
+    this.productCards = page.locator('[data-test="product-name"], .card-title, .product-title');
   }
 
   async open() {
     await this.goto('/');
     await this.waitForPageLoad();
+  }
+
+  async browseCatalog() {
+    await this.open();
+    await this.productCards.first().waitFor({ state: 'visible' });
   }
 
   async searchProduct(keyword) {
@@ -22,8 +27,9 @@ class CatalogPage extends BasePage {
     return this.page.getByRole('link', { name: new RegExp(name, 'i') }).first();
   }
 
-  async openProduct(name) {
-    await this.productByName(name).click();
+  async searchAndOpenProduct(keyword) {
+    await this.searchProduct(keyword);
+    await this.productByName(keyword).click();
   }
 }
 

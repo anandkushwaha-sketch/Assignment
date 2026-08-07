@@ -4,21 +4,37 @@ const { confirmInvoiceTwice } = require('../utils/checkoutHelper');
 class CheckoutPage extends BasePage {
   constructor(page) {
     super(page);
-    this.billingStreet = page.getByRole('textbox', { name: /street/i });
-    this.billingCity = page.getByRole('textbox', { name: /city/i });
-    this.billingState = page.getByRole('textbox', { name: /state/i });
-    this.billingCountry = page.getByRole('textbox', { name: /country/i });
-    this.billingPostalCode = page.getByRole('textbox', { name: /postal|zip/i });
+    this.billingStreet = page.getByLabel(/street/i);
+    this.billingCity = page.getByLabel(/city/i);
+    this.billingState = page.getByLabel(/state/i);
+    this.billingCountry = page.getByLabel(/country/i);
+    this.billingPostalCode = page.getByLabel(/postal|zip/i);
     this.cashOnDeliveryOption = page.getByLabel(/cash on delivery/i).or(
-      page.getByText(/cash on delivery/i)
-    );
+      page.getByRole('radio', { name: /cash on delivery/i })
+    ).or(page.getByText(/cash on delivery/i));
     this.confirmButton = page.getByRole('button', { name: /confirm/i });
-    this.placeOrderButton = page.getByRole('button', { name: /place order|confirm|pay/i });
+    this.proceedButton = page.getByRole('button', { name: /proceed|next|continue/i });
+    this.successMessage = page.getByRole('alert').or(page.getByText(/invoice|order|success/i));
   }
 
   async open() {
     await this.goto('/checkout');
     await this.waitForPageLoad();
+  }
+
+  async proceedToBillingIfNeeded() {
+    const maxSteps = 3;
+    for (let step = 0; step < maxSteps; step += 1) {
+      if (await this.billingStreet.isVisible()) {
+        return;
+      }
+
+      if (await this.proceedButton.isVisible()) {
+        await this.proceedButton.click();
+      }
+    }
+
+    await this.billingStreet.waitFor({ state: 'visible' });
   }
 
   async fillBillingAddress(billing) {
@@ -38,6 +54,7 @@ class CheckoutPage extends BasePage {
   }
 
   async completeCashOnDeliveryCheckout(billing) {
+    await this.proceedToBillingIfNeeded();
     await this.fillBillingAddress(billing);
     await this.selectCashOnDelivery();
     await this.confirmOrderTwice();

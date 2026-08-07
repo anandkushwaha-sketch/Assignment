@@ -58,6 +58,37 @@ const test = base.extend({
   testUser: async ({}, use) => {
     await use(buildUser());
   },
+  authenticatedUser: async ({ authApiPage, loginPage, page }, use) => {
+    const user = buildUser();
+    const response = await authApiPage.register(user);
+
+    if (!response.ok()) {
+      throw new Error(`Failed to register user for purchase flow: ${response.status()}`);
+    }
+
+    await loginPage.open();
+    await loginPage.login(user.email, user.password);
+    await page.waitForURL((url) => !url.pathname.includes('/auth/login'));
+
+    await use(user);
+  },
+  inStockProducts: async ({ productApiPage }, use) => {
+    const response = await productApiPage.getProducts();
+    const body = await response.json();
+    const products = (body.data || body).filter((product) => product.in_stock);
+
+    if (products.length < 2) {
+      throw new Error('Need at least two in-stock products for purchase flow test');
+    }
+
+    await use(
+      products.slice(0, 2).map((product) => ({
+        id: product.id,
+        name: product.name,
+        price: product.price,
+      }))
+    );
+  },
   billingData: async ({}, use) => {
     await use(buildBillingAddress());
   },

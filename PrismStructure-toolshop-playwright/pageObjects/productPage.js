@@ -5,8 +5,8 @@ class ProductPage extends BasePage {
     super(page);
     this.addToCartButton = page.getByRole('button', { name: /add to cart/i });
     this.productName = page.locator('h1, [data-test="product-name"]').first();
-    this.productPrice = page.locator('[data-test="product-price"], .price').first();
-    this.stockStatus = page.getByText(/in stock|out of stock/i);
+    this.productPrice = page.locator('[data-test="product-price"], .product-price, .price').first();
+    this.stockStatus = page.getByText(/in stock/i);
   }
 
   async addToCart() {
@@ -14,7 +14,12 @@ class ProductPage extends BasePage {
   }
 
   async getProductName() {
-    return this.productName.innerText();
+    return (await this.productName.innerText()).trim();
+  }
+
+  async getProductPrice() {
+    const priceText = await this.productPrice.innerText();
+    return parseFloat(priceText.replace(/[^0-9.]/g, ''));
   }
 }
 
