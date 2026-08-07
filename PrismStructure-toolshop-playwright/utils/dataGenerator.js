@@ -5,12 +5,16 @@ function uniqueEmail(prefix = 'testuser') {
   return `${prefix}+${timestamp}@example.com`;
 }
 
+function uniquePassword() {
+  return `${userDefaults.password}${Date.now().toString().slice(-4)}`;
+}
+
 function buildUser(overrides = {}) {
   return {
     first_name: userDefaults.first_name,
     last_name: userDefaults.last_name,
     email: uniqueEmail(),
-    password: userDefaults.password,
+    password: uniquePassword(),
     dob: userDefaults.dob,
     phone: userDefaults.phone,
     address: { ...userDefaults.address },
@@ -18,12 +22,13 @@ function buildUser(overrides = {}) {
   };
 }
 
-function buildLoginPayload(email, password = userDefaults.password) {
+function buildLoginPayload(email, password) {
   return { email, password };
 }
 
 module.exports = {
   uniqueEmail,
+  uniquePassword,
   buildUser,
   buildLoginPayload,
 };

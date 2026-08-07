@@ -44,6 +44,32 @@ function expectInvoiceResponse(body, invoiceRequest) {
   expect(body.invoicelines.length).toBeGreaterThan(0);
 }
 
+function expectUnauthorizedError(body) {
+  const message = body.message || body.error;
+  expect(message).toBeTruthy();
+  expect(String(message).toLowerCase()).toContain('unauthorized');
+}
+
+function expectNotFoundError(body) {
+  expect(body.message).toBeTruthy();
+  expect(String(body.message).toLowerCase()).toMatch(/not found/);
+}
+
+function expectFieldValidationError(body, field) {
+  expect(body[field]).toBeTruthy();
+  expect(Array.isArray(body[field])).toBe(true);
+  expect(body[field].length).toBeGreaterThan(0);
+}
+
+function expectConflictError(body, field) {
+  if (body[field]) {
+    expectFieldValidationError(body, field);
+    return;
+  }
+
+  expect(body.message).toBeTruthy();
+}
+
 function extractCartProductIds(cartBody) {
   const collections = [
     cartBody.cart_items,
@@ -65,5 +91,9 @@ module.exports = {
   expectTokenResponse,
   expectPaginatedProducts,
   expectInvoiceResponse,
+  expectUnauthorizedError,
+  expectNotFoundError,
+  expectFieldValidationError,
+  expectConflictError,
   extractCartProductIds,
 };

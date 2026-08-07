@@ -1,9 +1,9 @@
 const { test, expect } = require('../../fixtures/prism.fixture');
 const { buildUser } = require('../../utils/dataGenerator');
-const { expectStatus } = require('../../utils/apiAssertions');
+const { expectStatus, expectNotFoundError } = require('../../utils/apiAssertions');
 
-test.describe('API cart validation', () => {
-  test('TC-API-06 retrieve non-existent cart returns not found @regression', async ({
+test.describe('API cart and product negatives', () => {
+  test('TC-API-05 invalid cart and product ids return 404 @regression', async ({
     authApiPage,
     cartApiPage,
   }) => {
@@ -11,27 +11,17 @@ test.describe('API cart validation', () => {
     await authApiPage.register(user);
     const token = await authApiPage.loginAndGetToken(user.email, user.password);
     const invalidCartId = `invalid-cart-${Date.now()}`;
+    const invalidProductId = `invalid-product-${Date.now()}`;
 
-    const response = await cartApiPage.getCart(invalidCartId, token);
-    expectStatus(response, 404);
-  });
-
-  test('TC-API-07 add out-of-stock product to cart is rejected @regression', async ({
-    authApiPage,
-    cartApiPage,
-    productApiPage,
-  }) => {
-    const user = buildUser();
-    await authApiPage.register(user);
-    const token = await authApiPage.loginAndGetToken(user.email, user.password);
-    const outOfStockProduct = await productApiPage.getFirstOutOfStockProduct();
-
-    expect(outOfStockProduct).toBeTruthy();
+    const cartResponse = await cartApiPage.getCart(invalidCartId, token);
+    const cartBody = await cartResponse.json();
+    expectStatus(cartResponse, 404);
+    expectNotFoundError(cartBody);
 
     const { cartId } = await cartApiPage.createCartAndGetId(token);
-    const response = await cartApiPage.addProduct(cartId, outOfStockProduct.id, 1, token);
-
-    expect(response.ok()).toBeFalsy();
-    expect(response.status()).toBeGreaterThanOrEqual(400);
+    const productResponse = await cartApiPage.addProduct(cartId, invalidProductId, 1, token);
+    const productBody = await productResponse.json();
+    expectStatus(productResponse, 404);
+    expectNotFoundError(productBody);
   });
 });

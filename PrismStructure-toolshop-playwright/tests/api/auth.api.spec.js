@@ -1,20 +1,25 @@
 const { test, expect } = require('../../fixtures/prism.fixture');
-const { buildUser, buildLoginPayload, uniqueEmail } = require('../../utils/dataGenerator');
+const { buildUser, buildLoginPayload, uniqueEmail, uniquePassword } = require('../../utils/dataGenerator');
 const { buildInvoicePayload } = require('../../utils/invoiceHelper');
-const { expectStatus } = require('../../utils/apiAssertions');
+const {
+  expectStatus,
+  expectUnauthorizedError,
+  expectConflictError,
+} = require('../../utils/apiAssertions');
 
-test.describe('API authentication', () => {
-  test('TC-API-02 login with invalid credentials is rejected @regression', async ({
+test.describe('API authentication negatives', () => {
+  test('TC-API-02 login with invalid credentials returns 401 @regression', async ({
     authApiPage,
   }) => {
-    const credentials = buildLoginPayload(uniqueEmail('invalid'), 'WrongPass@99');
+    const credentials = buildLoginPayload(uniqueEmail('invalid'), uniquePassword());
     const response = await authApiPage.login(credentials.email, credentials.password);
+    const body = await response.json();
 
-    expect(response.ok()).toBeFalsy();
-    expect(response.status()).toBeGreaterThanOrEqual(400);
+    expectStatus(response, 401);
+    expectUnauthorizedError(body);
   });
 
-  test('TC-API-03 duplicate user registration returns conflict @regression', async ({
+  test('TC-API-03 duplicate user registration returns 409 @regression', async ({
     authApiPage,
   }) => {
     const user = buildUser();
@@ -23,12 +28,16 @@ test.describe('API authentication', () => {
     expectStatus(firstResponse, 201);
 
     const duplicateResponse = await authApiPage.register(user);
+    const duplicateBody = await duplicateResponse.json();
+
     expectStatus(duplicateResponse, 409);
+    expectConflictError(duplicateBody, 'email');
   });
 });
 
-test.describe('API authorization', () => {
-  test('TC-API-04 invoice creation without bearer token is unauthorized @regression', async ({
+test.describe('API authorization negatives', () => {
+  test('TC-API-04 protected endpoints reject missing and invalid bearer tokens @regression', async ({
+    authApiPage,
     invoiceApiPage,
     cartApiPage,
     productApiPage,
@@ -37,18 +46,22 @@ test.describe('API authorization', () => {
     const { cartId } = await cartApiPage.createCartAndGetId();
     await cartApiPage.addProduct(cartId, products[0].id, 1);
 
-    const response = await invoiceApiPage.createInvoice(
+    const missingTokenMe = await authApiPage.getCurrentUser(null);
+    const missingTokenMeBody = await missingTokenMe.json();
+    expectStatus(missingTokenMe, 401);
+    expectUnauthorizedError(missingTokenMeBody);
+
+    const invalidTokenMe = await authApiPage.getCurrentUser('invalid-bearer-token');
+    const invalidTokenMeBody = await invalidTokenMe.json();
+    expectStatus(invalidTokenMe, 401);
+    expectUnauthorizedError(invalidTokenMeBody);
+
+    const missingTokenInvoice = await invoiceApiPage.createInvoice(
       buildInvoicePayload(cartId),
       null
     );
-
-    expectStatus(response, 401);
-  });
-
-  test('TC-API-05 current user endpoint requires bearer token @regression', async ({
-    authApiPage,
-  }) => {
-    const response = await authApiPage.getCurrentUser(null);
-    expectStatus(response, 401);
+    const missingTokenInvoiceBody = await missingTokenInvoice.json();
+    expectStatus(missingTokenInvoice, 401);
+    expectUnauthorizedError(missingTokenInvoiceBody);
   });
 });
