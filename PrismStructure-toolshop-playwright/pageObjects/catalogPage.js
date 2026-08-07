@@ -27,6 +27,10 @@ class CatalogPage extends BasePage {
     return this.page.getByRole('link', { name: new RegExp(name, 'i') }).first();
   }
 
+  noResultsMessage() {
+    return this.page.getByText(/no products|no results|not found|0 products/i);
+  }
+
   async searchAndOpenProduct(keyword) {
     await this.searchProduct(keyword);
     await this.productByName(keyword).click();

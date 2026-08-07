@@ -21,6 +21,13 @@ class ProductApiPage extends BaseApiPage {
     const products = body.data || body;
     return products.find((product) => product.in_stock === true);
   }
+
+  async getFirstOutOfStockProduct() {
+    const response = await this.getProducts();
+    const body = await response.json();
+    const products = body.data || body;
+    return products.find((product) => product.in_stock === false);
+  }
 }
 
 module.exports = { ProductApiPage };

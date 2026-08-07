@@ -14,6 +14,7 @@ class CheckoutPage extends BasePage {
     ).or(page.getByText(/cash on delivery/i));
     this.confirmButton = page.getByRole('button', { name: /confirm/i });
     this.proceedButton = page.getByRole('button', { name: /proceed|next|continue/i });
+    this.emptyCartMessage = page.getByText(/cart is empty|no items|add products|your cart is empty/i);
     this.successMessage = page.getByRole('alert').or(page.getByText(/invoice|order|success/i));
   }
 

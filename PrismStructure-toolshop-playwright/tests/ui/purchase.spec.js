@@ -20,7 +20,7 @@ test.describe('Purchase flow', () => {
 
     await catalogPage.searchAndOpenProduct(firstProduct.name);
     const firstProductName = await productPage.getProductName();
-    await expect(productPage.stockStatus).toBeVisible();
+    await expect(productPage.inStockStatus).toBeVisible();
     await productPage.addToCart();
 
     await catalogPage.open();

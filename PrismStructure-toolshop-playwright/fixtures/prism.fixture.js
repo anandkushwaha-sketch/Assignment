@@ -89,6 +89,18 @@ const test = base.extend({
       }))
     );
   },
+  outOfStockProduct: async ({ productApiPage }, use) => {
+    const product = await productApiPage.getFirstOutOfStockProduct();
+
+    if (!product) {
+      throw new Error('No out-of-stock product found for cart edge test');
+    }
+
+    await use({
+      id: product.id,
+      name: product.name,
+    });
+  },
   billingData: async ({}, use) => {
     await use(buildBillingAddress());
   },

@@ -6,7 +6,13 @@ class ProductPage extends BasePage {
     this.addToCartButton = page.getByRole('button', { name: /add to cart/i });
     this.productName = page.locator('h1, [data-test="product-name"]').first();
     this.productPrice = page.locator('[data-test="product-price"], .product-price, .price').first();
-    this.stockStatus = page.getByText(/in stock/i);
+    this.inStockStatus = page.getByText(/in stock/i);
+    this.outOfStockStatus = page.getByText(/out of stock/i);
+  }
+
+  async openById(productId) {
+    await this.goto(`/product/${productId}`);
+    await this.waitForPageLoad();
   }
 
   async addToCart() {
