@@ -8,26 +8,26 @@ TC-MAN-01,AC1,Register a new user with valid details,Positive,Smoke,High,User is
 Last Name: User
 Email: testuser+{timestamp}@example.com
 Password: Test@1234
-DOB: 1990-01-15","User account is created successfully. Success message or redirect to login/home is displayed. No validation errors shown.",,
+DOB: 1990-01-15","User account is created successfully. Success message or redirect to login/home is displayed. No validation errors shown.",Registration flow validated via automated TC-UI-01 on 2026-08-07.,Passed
 TC-MAN-02,AC1,Login with registered credentials and verify profile,Positive,Smoke,High,"Execute after TC-MAN-01 or use a pre-registered account. User is not currently logged in.","1. Navigate to https://practicesoftwaretesting.com/auth/login
 2. Enter registered email and password
 3. Click Login
 4. Navigate to Account > Profile (or /account/profile)
 5. Verify displayed profile information","Email: (from TC-MAN-01 registration)
-Password: Test@1234","User is logged in successfully. Profile page displays correct first name last name and email matching registration data.",,
+Password: Test@1234","User is logged in successfully. Profile page displays correct first name last name and email matching registration data.",Login and profile fields verified via automated TC-UI-01 on 2026-08-07.,Passed
 TC-MAN-03,AC1,Login with invalid credentials shows error,Negative,Regression,High,User is on the login page and not logged in,"1. Navigate to https://practicesoftwaretesting.com/auth/login
 2. Enter a valid-format email address
 3. Enter an incorrect password
 4. Click Login
 5. Observe error message and page state","Email: customer@practicesoftwaretesting.com
-Password: WrongPass@99","Login is rejected. An appropriate error message is displayed (e.g. invalid credentials). User remains on login page and is not redirected to account or checkout.",,
+Password: WrongPass@99","Login is rejected. An appropriate error message is displayed (e.g. invalid credentials). User remains on login page and is not redirected to account or checkout.",Invalid login error displayed; user remains on login page via automated TC-UI-03 on 2026-08-07.,Passed
 TC-MAN-04,AC2,Browse catalog and search for a product,Positive,Regression,Medium,User is on the Toolshop home page (logged in or guest),"1. Navigate to https://practicesoftwaretesting.com/
 2. Browse the product catalog on the home page and verify products are listed with name and price
 3. Locate the Search field
 4. Enter a known product name (e.g. Hammer)
 5. Execute search
 6. Click on a matching product from results
-7. Verify product detail page loads","Search term: Hammer","Catalog displays products with name and price. Search results show products matching the keyword. Product detail page opens showing product name price description and stock status. Add to Cart action is visible for in-stock items.",,
+7. Verify product detail page loads","Search term: Hammer","Catalog displays products with name and price. Search results show products matching the keyword. Product detail page opens showing product name price description and stock status. Add to Cart action is visible for in-stock items.",Catalog browse search and product detail verified via automated TC-UI-04 on 2026-08-07.,Passed
 TC-MAN-05,AC2,Add multiple in-stock products to cart,Positive,Regression,High,User is logged in. At least two in-stock products are available in catalog,"1. Navigate to product catalog
 2. Open first in-stock product detail page
 3. Click Add to Cart
@@ -35,7 +35,7 @@ TC-MAN-05,AC2,Add multiple in-stock products to cart,Positive,Regression,High,Us
 5. Open second in-stock product detail page
 6. Click Add to Cart
 7. Open cart and verify items listed","Product 1: Claw Hammer (or any in-stock item)
-Product 2: Thor Hammer (or any other in-stock item)","Both products appear in the cart. Cart badge/count reflects total items. Each line shows correct product name price and quantity of 1.",,
+Product 2: Thor Hammer (or any other in-stock item)","Both products appear in the cart. Cart badge/count reflects total items. Each line shows correct product name price and quantity of 1.",Multiple products added to cart verified via automated TC-UI-06 on 2026-08-07.,Passed
 TC-MAN-06,AC2,Update quantity of item in cart,Edge,Regression,High,"Execute after TC-MAN-05 or manually add at least one product to cart. User is logged in.","1. Navigate to cart page
 2. Note current quantity and line total for first item
 3. Increase quantity (e.g. from 1 to 2) using quantity control
@@ -43,7 +43,7 @@ TC-MAN-06,AC2,Update quantity of item in cart,Edge,Regression,High,"Execute afte
 5. Decrease quantity back to 1
 6. Verify cart updates again","Initial quantity: 1
 Updated quantity: 2
-Then reduced to: 1","Quantity updates are reflected immediately. Line total recalculates correctly (unit price x quantity). Cart subtotal updates accordingly. No errors displayed.",,
+Then reduced to: 1","Quantity updates are reflected immediately. Line total recalculates correctly (unit price x quantity). Cart subtotal updates accordingly. No errors displayed.",Cart quantity update verified via automated TC-UI-06 on 2026-08-07.,Passed
 TC-MAN-07,"AC2, REQ-INV-CONFIRM, REQ-COD",Complete COD checkout generate invoice and verify in My Invoices,Positive,Smoke,High,"Execute after TC-MAN-05/06 or manually add at least one product to cart. User is logged in.","1. Navigate to checkout (/checkout)
 2. Verify cart items are present
 3. Enter valid billing address details
@@ -59,7 +59,7 @@ Billing City: Hesselbury
 Billing State: Florida
 Billing Country: TG
 Billing Postal Code: 1234AA
-Payment Method: Cash on Delivery","Checkout completes successfully with COD. Invoice is generated after pressing Confirm twice. Invoice appears in My Invoices with correct product line items quantities and total amount matching the order.",,
+Payment Method: Cash on Delivery","Checkout completes successfully with COD. Invoice is generated after pressing Confirm twice. Invoice appears in My Invoices with correct product line items quantities and total amount matching the order.",COD checkout double-confirm and invoice listing verified via automated TC-UI-06 regression run on 2026-08-07.,Passed
 TC-MAN-08,"AC2, REQ-INV-CONFIRM",Single Confirm does not generate invoice,Negative,Regression,High,"User is logged in with at least one product in cart. Checkout flow reached with COD selected.","1. Navigate to checkout (/checkout) with items in cart
 2. Enter valid billing address details
 3. Select payment method: Cash on Delivery
@@ -71,4 +71,4 @@ Billing City: Hesselbury
 Billing State: Florida
 Billing Country: TG
 Billing Postal Code: 1234AA
-Payment Method: Cash on Delivery","Invoice is not generated after a single Confirm click. No new invoice appears in My Invoices for this order session. Order remains incomplete or confirmation prompt is still displayed.",,
+Payment Method: Cash on Delivery","Invoice is not generated after a single Confirm click. No new invoice appears in My Invoices for this order session. Order remains incomplete or confirmation prompt is still displayed.",Not executed in automation; requires manual walkthrough per steps above.,Pending Manual
