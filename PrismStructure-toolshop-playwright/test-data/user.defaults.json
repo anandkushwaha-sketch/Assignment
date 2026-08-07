@@ -1,0 +1,15 @@
+{
+  "first_name": "Test",
+  "last_name": "User",
+  "password": "Test@1234",
+  "dob": "1990-01-15",
+  "phone": "0987654321",
+  "address": {
+    "street": "Street 1",
+    "house_number": "12",
+    "city": "City",
+    "state": "State",
+    "country": "Country",
+    "postal_code": "1234AA"
+  }
+}

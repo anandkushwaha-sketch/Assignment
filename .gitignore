@@ -6,6 +6,13 @@ allure-results/
 allure-report/
 .env
 .env.*
+!.env.example
 *.log
 .DS_Store
 Thumbs.db
+
+# Prism Playwright outputs
+PrismStructure-toolshop-playwright/node_modules/
+PrismStructure-toolshop-playwright/playwright-report/
+PrismStructure-toolshop-playwright/test-results/
+PrismStructure-toolshop-playwright/reports/*.json
