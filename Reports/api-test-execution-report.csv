@@ -1,0 +1,8 @@
+TestCaseID,Title,Tag,Type,Status,DurationMs,ExecutedOn,Notes
+TC-API-01,Complete user cart and invoice lifecycle,@smoke @regression,Positive,Passed,7300,2026-08-07,Register login products cart invoice COD full lifecycle
+TC-API-02,Login with invalid credentials returns 401,@regression,Negative,Passed,818,2026-08-07,POST /users/login returns 401 Unauthorized
+TC-API-03,Duplicate user registration returns 409,@regression,Negative,Passed,2100,2026-08-07,POST /users/register duplicate email returns 409
+TC-API-04,Protected endpoints reject missing and invalid bearer tokens,@regression,Negative,Passed,3800,2026-08-07,GET /users/me and POST /invoices without valid token return 401
+TC-API-05,Invalid cart and product ids,@regression,Negative,Passed,3300,2026-08-07,GET invalid cart 404; add invalid product_id 422
+TC-API-06,Invoice with missing required field returns 422,@regression,Negative,Passed,4200,2026-08-07,POST /invoices missing billing_street returns 422
+TC-API-07,Invoice with invalid cart id returns 404,@regression,Negative,Passed,2100,2026-08-07,POST /invoices with non-existent cart_id returns 404

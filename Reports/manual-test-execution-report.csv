@@ -1,0 +1,9 @@
+TestCaseID,Title,Tag,Type,Status,ActualResult,ExecutedOn
+TC-MAN-01,Register a new user with valid details,Smoke,Positive,Passed,Validated via TC-UI-01 automation,2026-08-07
+TC-MAN-02,Login and verify profile,Smoke,Positive,Passed,Validated via TC-UI-01 automation,2026-08-07
+TC-MAN-03,Invalid login shows error,Regression,Negative,Passed,Validated via TC-UI-03 automation,2026-08-07
+TC-MAN-04,Browse catalog and search,Regression,Positive,Passed,Validated via TC-UI-04 automation,2026-08-07
+TC-MAN-05,Add multiple products to cart,Regression,Positive,Passed,Validated via TC-UI-06 automation,2026-08-07
+TC-MAN-06,Update cart quantity,Regression,Edge,Passed,Validated via TC-UI-06 automation,2026-08-07
+TC-MAN-07,COD checkout and invoice verify,Smoke,Positive,Passed,Validated via TC-UI-06 automation,2026-08-07
+TC-MAN-08,Single Confirm does not generate invoice,Regression,Negative,Pending Manual,Requires manual walkthrough — no automation,2026-08-07

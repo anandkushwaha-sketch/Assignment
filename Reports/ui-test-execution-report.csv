@@ -1,0 +1,8 @@
+TestCaseID,Title,Tag,Type,Status,VideoFile,ExecutedOn
+TC-UI-01,Register and login with valid user,@smoke,Positive,Passed,TC-UI-01-register-login-smoke.webm,2026-08-07
+TC-UI-03,Login with invalid credentials shows error,@regression,Negative,Passed,TC-UI-03-invalid-login-regression.webm,2026-08-07
+TC-UI-04,Search product and open detail page,@regression,Positive,Passed,TC-UI-04-search-detail-regression.webm,2026-08-07
+TC-UI-05,Search with no matching products shows empty state,@regression,Negative,Passed,TC-UI-05-no-results-regression.webm,2026-08-07
+TC-UI-06,Complete purchase flow with COD and invoice verification,@smoke @regression,Positive,Passed,TC-UI-06-purchase-e2e-smoke-regression.webm,2026-08-07
+TC-UI-07,Empty cart checkout is blocked,@regression,Negative,Passed,TC-UI-07-empty-cart-regression.webm,2026-08-07
+TC-UI-08,Cannot add out-of-stock product to cart,@regression,Edge,Passed,TC-UI-08-out-of-stock-regression.webm,2026-08-07

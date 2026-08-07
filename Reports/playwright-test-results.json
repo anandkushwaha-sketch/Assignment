@@ -1,0 +1,909 @@
+{
+  "config": {
+    "argv": [
+      "C:\\Program Files\\nodejs\\node.exe",
+      "C:\\Users\\Anand Kushwaha\\Assignment\\PrismStructure-toolshop-playwright\\node_modules\\@playwright\\test\\cli.js",
+      "test",
+      "-c",
+      "playwright.record.config.js"
+    ],
+    "configFile": "C:\\Users\\Anand Kushwaha\\Assignment\\PrismStructure-toolshop-playwright\\playwright.record.config.js",
+    "rootDir": "C:/Users/Anand Kushwaha/Assignment/PrismStructure-toolshop-playwright/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": true,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "apiBaseUrl": "https://api.practicesoftwaretesting.com",
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "C:/Users/Anand Kushwaha/Assignment/Reports/test-artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "apiBaseUrl": "https://api.practicesoftwaretesting.com",
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "C:/Users/Anand Kushwaha/Assignment/PrismStructure-toolshop-playwright/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "html",
+        {
+          "outputFolder": "C:\\Users\\Anand Kushwaha\\Assignment\\Reports\\playwright-html-report",
+          "open": "never"
+        }
+      ],
+      [
+        "json",
+        {
+          "outputFile": "C:\\Users\\Anand Kushwaha\\Assignment\\Reports\\playwright-test-results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.62.1",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "api\\auth.api.spec.js",
+      "file": "api/auth.api.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "API authentication negatives",
+          "file": "api/auth.api.spec.js",
+          "line": 10,
+          "column": 6,
+          "specs": [
+            {
+              "title": "TC-API-02 login with invalid credentials returns 401 @regression",
+              "ok": true,
+              "tags": [
+                "regression"
+              ],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 818,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-08-07T12:34:59.988Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\Users\\Anand Kushwaha\\Assignment\\Reports\\test-artifacts\\api-auth.api-API-authentic-33660-ials-returns-401-regression-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "3dc03540d0d0fe142777-38c5a6bee90a3e7fa0c1",
+              "file": "api/auth.api.spec.js",
+              "line": 11,
+              "column": 3
+            },
+            {
+              "title": "TC-API-03 duplicate user registration returns 409 @regression",
+              "ok": true,
+              "tags": [
+                "regression"
+              ],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2058,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-08-07T12:35:00.933Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\Users\\Anand Kushwaha\\Assignment\\Reports\\test-artifacts\\api-auth.api-API-authentic-b0f75-tion-returns-409-regression-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "3dc03540d0d0fe142777-c840aa3d53ec99a10a9b",
+              "file": "api/auth.api.spec.js",
+              "line": 22,
+              "column": 3
+            }
+          ]
+        },
+        {
+          "title": "API authorization negatives",
+          "file": "api/auth.api.spec.js",
+          "line": 38,
+          "column": 6,
+          "specs": [
+            {
+              "title": "TC-API-04 protected endpoints reject missing and invalid bearer tokens @regression",
+              "ok": true,
+              "tags": [
+                "regression"
+              ],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3828,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-08-07T12:35:03.034Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\Users\\Anand Kushwaha\\Assignment\\Reports\\test-artifacts\\api-auth.api-API-authoriza-ca5b9-id-bearer-tokens-regression-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "3dc03540d0d0fe142777-86707426636e0e5e174b",
+              "file": "api/auth.api.spec.js",
+              "line": 39,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "api\\cart.api.spec.js",
+      "file": "api/cart.api.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "API cart and product negatives",
+          "file": "api/cart.api.spec.js",
+          "line": 16,
+          "column": 6,
+          "specs": [
+            {
+              "title": "TC-API-05 invalid cart and product ids return 404 @regression",
+              "ok": true,
+              "tags": [
+                "regression"
+              ],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3334,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-08-07T12:35:06.918Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\Users\\Anand Kushwaha\\Assignment\\Reports\\test-artifacts\\api-cart.api-API-cart-and--d0274-t-ids-return-404-regression-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "fc61688589fcea6f894b-d5282975f84e90db7bd2",
+              "file": "api/cart.api.spec.js",
+              "line": 17,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "api\\invoice.api.spec.js",
+      "file": "api/invoice.api.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "API invoice negatives",
+          "file": "api/invoice.api.spec.js",
+          "line": 10,
+          "column": 6,
+          "specs": [
+            {
+              "title": "TC-API-06 invoice with missing required field returns 422 @regression",
+              "ok": true,
+              "tags": [
+                "regression"
+              ],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 4236,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-08-07T12:35:10.312Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\Users\\Anand Kushwaha\\Assignment\\Reports\\test-artifacts\\api-invoice.api-API-invoic-c3342-ield-returns-422-regression-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b1a022d7a47afb8f0c24-12f13785c96b81e2e515",
+              "file": "api/invoice.api.spec.js",
+              "line": 11,
+              "column": 3
+            },
+            {
+              "title": "TC-API-07 invoice with invalid cart id returns 404 @regression",
+              "ok": true,
+              "tags": [
+                "regression"
+              ],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2090,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-08-07T12:35:14.601Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\Users\\Anand Kushwaha\\Assignment\\Reports\\test-artifacts\\api-invoice.api-API-invoic-12d8c-t-id-returns-404-regression-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b1a022d7a47afb8f0c24-24ff3d4e91330824af21",
+              "file": "api/invoice.api.spec.js",
+              "line": 34,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "api\\lifecycle.spec.js",
+      "file": "api/lifecycle.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "API lifecycle",
+          "file": "api/lifecycle.spec.js",
+          "line": 14,
+          "column": 6,
+          "specs": [
+            {
+              "title": "TC-API-01 complete user cart and invoice lifecycle @smoke @regression",
+              "ok": true,
+              "tags": [
+                "smoke",
+                "regression"
+              ],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 7328,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-08-07T12:35:16.746Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\Users\\Anand Kushwaha\\Assignment\\Reports\\test-artifacts\\api-lifecycle-API-lifecycl-c578c--lifecycle-smoke-regression-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "9c86eecf60f8cb135d34-a9bcea4b3fbc155ee51f",
+              "file": "api/lifecycle.spec.js",
+              "line": 15,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "ui\\auth.spec.js",
+      "file": "ui/auth.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Authentication",
+          "file": "ui/auth.spec.js",
+          "line": 3,
+          "column": 6,
+          "specs": [
+            {
+              "title": "TC-UI-01 register and login with valid user @smoke",
+              "ok": true,
+              "tags": [
+                "smoke"
+              ],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 13636,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-08-07T12:35:24.147Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\Anand Kushwaha\\Assignment\\Reports\\test-artifacts\\ui-auth-Authentication-TC--0408d-login-with-valid-user-smoke-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Users\\Anand Kushwaha\\Assignment\\Reports\\test-artifacts\\ui-auth-Authentication-TC--0408d-login-with-valid-user-smoke-chromium\\video.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\Users\\Anand Kushwaha\\Assignment\\Reports\\test-artifacts\\ui-auth-Authentication-TC--0408d-login-with-valid-user-smoke-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2ebdd61f397d04caf574-f1bcc2a42e7c44f9e3f8",
+              "file": "ui/auth.spec.js",
+              "line": 4,
+              "column": 3
+            },
+            {
+              "title": "TC-UI-03 login with invalid credentials shows error @regression",
+              "ok": true,
+              "tags": [
+                "regression"
+              ],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 4965,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-08-07T12:35:38.628Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\Anand Kushwaha\\Assignment\\Reports\\test-artifacts\\ui-auth-Authentication-TC--ec1b0-ials-shows-error-regression-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Users\\Anand Kushwaha\\Assignment\\Reports\\test-artifacts\\ui-auth-Authentication-TC--ec1b0-ials-shows-error-regression-chromium\\video.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\Users\\Anand Kushwaha\\Assignment\\Reports\\test-artifacts\\ui-auth-Authentication-TC--ec1b0-ials-shows-error-regression-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2ebdd61f397d04caf574-678c229f40bbb49b16c9",
+              "file": "ui/auth.spec.js",
+              "line": 34,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "ui\\catalog.spec.js",
+      "file": "ui/catalog.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Catalog and search",
+          "file": "ui/catalog.spec.js",
+          "line": 3,
+          "column": 6,
+          "specs": [
+            {
+              "title": "TC-UI-04 search product and open detail page @regression",
+              "ok": true,
+              "tags": [
+                "regression"
+              ],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 8192,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-08-07T12:35:43.752Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\Anand Kushwaha\\Assignment\\Reports\\test-artifacts\\ui-catalog-Catalog-and-sea-0caca-open-detail-page-regression-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Users\\Anand Kushwaha\\Assignment\\Reports\\test-artifacts\\ui-catalog-Catalog-and-sea-0caca-open-detail-page-regression-chromium\\video.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\Users\\Anand Kushwaha\\Assignment\\Reports\\test-artifacts\\ui-catalog-Catalog-and-sea-0caca-open-detail-page-regression-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "0f0bc484ab68b77b65ee-63002ac0ae8152f8cc7d",
+              "file": "ui/catalog.spec.js",
+              "line": 4,
+              "column": 3
+            },
+            {
+              "title": "TC-UI-05 search with no matching products shows empty state @regression",
+              "ok": true,
+              "tags": [
+                "regression"
+              ],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 5704,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-08-07T12:35:52.523Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\Anand Kushwaha\\Assignment\\Reports\\test-artifacts\\ui-catalog-Catalog-and-sea-93547-hows-empty-state-regression-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Users\\Anand Kushwaha\\Assignment\\Reports\\test-artifacts\\ui-catalog-Catalog-and-sea-93547-hows-empty-state-regression-chromium\\video.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\Users\\Anand Kushwaha\\Assignment\\Reports\\test-artifacts\\ui-catalog-Catalog-and-sea-93547-hows-empty-state-regression-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "0f0bc484ab68b77b65ee-679c17c195eecbaf97d2",
+              "file": "ui/catalog.spec.js",
+              "line": 34,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "ui\\checkout.spec.js",
+      "file": "ui/checkout.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Checkout validation",
+          "file": "ui/checkout.spec.js",
+          "line": 3,
+          "column": 6,
+          "specs": [
+            {
+              "title": "TC-UI-07 empty cart checkout is blocked @regression",
+              "ok": true,
+              "tags": [
+                "regression"
+              ],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2490,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-08-07T12:35:58.598Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\Anand Kushwaha\\Assignment\\Reports\\test-artifacts\\ui-checkout-Checkout-valid-b6ee4-ckout-is-blocked-regression-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Users\\Anand Kushwaha\\Assignment\\Reports\\test-artifacts\\ui-checkout-Checkout-valid-b6ee4-ckout-is-blocked-regression-chromium\\video.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\Users\\Anand Kushwaha\\Assignment\\Reports\\test-artifacts\\ui-checkout-Checkout-valid-b6ee4-ckout-is-blocked-regression-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "14b42a966831425e1cec-341b4a3cd4c780816857",
+              "file": "ui/checkout.spec.js",
+              "line": 4,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "ui\\product.spec.js",
+      "file": "ui/product.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Product stock validation",
+          "file": "ui/product.spec.js",
+          "line": 3,
+          "column": 6,
+          "specs": [
+            {
+              "title": "TC-UI-08 cannot add out-of-stock product to cart @regression",
+              "ok": true,
+              "tags": [
+                "regression"
+              ],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 5560,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-08-07T12:36:01.169Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\Anand Kushwaha\\Assignment\\Reports\\test-artifacts\\ui-product-Product-stock-v-ed053--product-to-cart-regression-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Users\\Anand Kushwaha\\Assignment\\Reports\\test-artifacts\\ui-product-Product-stock-v-ed053--product-to-cart-regression-chromium\\video.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\Users\\Anand Kushwaha\\Assignment\\Reports\\test-artifacts\\ui-product-Product-stock-v-ed053--product-to-cart-regression-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "bcd07c0a976700bbf2b9-54a89b0e1c43a7345a27",
+              "file": "ui/product.spec.js",
+              "line": 4,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "ui\\purchase.spec.js",
+      "file": "ui/purchase.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Purchase flow",
+          "file": "ui/purchase.spec.js",
+          "line": 3,
+          "column": 6,
+          "specs": [
+            {
+              "title": "TC-UI-06 complete purchase flow with COD and invoice verification @smoke @regression",
+              "ok": true,
+              "tags": [
+                "smoke",
+                "regression"
+              ],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 36689,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-08-07T12:36:06.892Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "C:\\Users\\Anand Kushwaha\\Assignment\\Reports\\test-artifacts\\ui-purchase-Purchase-flow--abed8-rification-smoke-regression-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "C:\\Users\\Anand Kushwaha\\Assignment\\Reports\\test-artifacts\\ui-purchase-Purchase-flow--abed8-rification-smoke-regression-chromium\\video.webm"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "C:\\Users\\Anand Kushwaha\\Assignment\\Reports\\test-artifacts\\ui-purchase-Purchase-flow--abed8-rification-smoke-regression-chromium\\trace.zip"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "faeb22d57e619e324439-90e48b1993f39019f440",
+              "file": "ui/purchase.spec.js",
+              "line": 4,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-08-07T12:34:58.814Z",
+    "duration": 108537.428,
+    "expected": 14,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}
