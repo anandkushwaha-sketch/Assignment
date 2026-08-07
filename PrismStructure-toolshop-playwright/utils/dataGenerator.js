@@ -26,9 +26,14 @@ function buildLoginPayload(email, password) {
   return { email, password };
 }
 
+function invalidResourceId(suffix = 'Z') {
+  return `01ZZZZZZZZZZZZZZZZZZZZZZZ${suffix}`;
+}
+
 module.exports = {
   uniqueEmail,
   uniquePassword,
   buildUser,
   buildLoginPayload,
+  invalidResourceId,
 };

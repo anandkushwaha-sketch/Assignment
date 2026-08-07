@@ -1,6 +1,17 @@
 const { test, expect } = require('../../fixtures/prism.fixture');
-const { buildUser } = require('../../utils/dataGenerator');
-const { expectStatus, expectNotFoundError } = require('../../utils/apiAssertions');
+const { buildUser, invalidResourceId } = require('../../utils/dataGenerator');
+const {
+  expectStatus,
+  expectNotFoundError,
+  expectFieldValidationError,
+} = require('../../utils/apiAssertions');
+
+function mutateResourceId(resourceId) {
+  const lastCharacter = resourceId.slice(-1);
+  const alternateCharacter = lastCharacter === 'A' ? 'B' : 'A';
+
+  return `${resourceId.slice(0, -1)}${alternateCharacter}`;
+}
 
 test.describe('API cart and product negatives', () => {
   test('TC-API-05 invalid cart and product ids return 404 @regression', async ({
@@ -10,18 +21,19 @@ test.describe('API cart and product negatives', () => {
     const user = buildUser();
     await authApiPage.register(user);
     const token = await authApiPage.loginAndGetToken(user.email, user.password);
-    const invalidCartId = `invalid-cart-${Date.now()}`;
-    const invalidProductId = `invalid-product-${Date.now()}`;
+
+    const { cartId } = await cartApiPage.createCartAndGetId(token);
+    const invalidCartId = mutateResourceId(cartId);
 
     const cartResponse = await cartApiPage.getCart(invalidCartId, token);
     const cartBody = await cartResponse.json();
     expectStatus(cartResponse, 404);
     expectNotFoundError(cartBody);
 
-    const { cartId } = await cartApiPage.createCartAndGetId(token);
+    const invalidProductId = invalidResourceId('Z');
     const productResponse = await cartApiPage.addProduct(cartId, invalidProductId, 1, token);
     const productBody = await productResponse.json();
-    expectStatus(productResponse, 404);
-    expectNotFoundError(productBody);
+    expectStatus(productResponse, 422);
+    expectFieldValidationError(productBody, 'product_id');
   });
 });

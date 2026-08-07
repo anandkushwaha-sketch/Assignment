@@ -28,7 +28,7 @@ class CatalogPage extends BasePage {
   }
 
   noResultsMessage() {
-    return this.page.getByText(/no products|no results|not found|0 products/i);
+    return this.page.getByTestId('no-results');
   }
 
   async searchAndOpenProduct(keyword) {

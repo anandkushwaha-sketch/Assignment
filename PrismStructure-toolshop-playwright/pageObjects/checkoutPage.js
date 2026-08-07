@@ -15,7 +15,7 @@ class CheckoutPage extends BasePage {
     this.proceedButton = page.getByRole('button', { name: /proceed|checkout|next|continue/i });
     this.billingHeading = page.getByRole('heading', { name: /billing address/i });
     this.paymentHeading = page.getByRole('heading', { name: /payment/i });
-    this.emptyCartMessage = page.getByText(/cart is empty|no items|add products|your cart is empty/i);
+    this.emptyCartMessage = page.getByText(/cart is empty|nothing to display/i);
     this.successMessage = page.getByRole('alert').or(page.getByText(/invoice|order|success|thank you/i));
   }
 

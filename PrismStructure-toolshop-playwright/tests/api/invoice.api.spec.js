@@ -1,5 +1,5 @@
 const { test, expect } = require('../../fixtures/prism.fixture');
-const { buildUser } = require('../../utils/dataGenerator');
+const { buildUser, invalidResourceId } = require('../../utils/dataGenerator');
 const { buildInvoicePayload } = require('../../utils/invoiceHelper');
 const {
   expectStatus,
@@ -38,10 +38,16 @@ test.describe('API invoice negatives', () => {
     const user = buildUser();
     await authApiPage.register(user);
     const token = await authApiPage.loginAndGetToken(user.email, user.password);
-    const invalidCartId = `invalid-cart-${Date.now()}`;
+    const invalidCartId = invalidResourceId('Z');
 
     const response = await invoiceApiPage.createInvoice(
-      buildInvoicePayload(invalidCartId),
+      buildInvoicePayload(invalidCartId, {
+        billing_street: 'Zoey Shore',
+        billing_city: 'Hesselbury',
+        billing_state: 'Florida',
+        billing_country: 'TG',
+        billing_postal_code: '1234AA',
+      }),
       token
     );
     const body = await response.json();

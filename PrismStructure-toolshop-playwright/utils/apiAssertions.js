@@ -60,9 +60,10 @@ function expectNotFoundError(body) {
 }
 
 function expectFieldValidationError(body, field) {
-  expect(body[field]).toBeTruthy();
-  expect(Array.isArray(body[field])).toBe(true);
-  expect(body[field].length).toBeGreaterThan(0);
+  const fieldErrors = body[field] || body.errors?.[field];
+  expect(fieldErrors).toBeTruthy();
+  expect(Array.isArray(fieldErrors)).toBe(true);
+  expect(fieldErrors.length).toBeGreaterThan(0);
 }
 
 function expectConflictError(body, field) {
