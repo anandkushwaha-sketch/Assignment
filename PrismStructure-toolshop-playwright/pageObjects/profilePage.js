@@ -3,9 +3,10 @@ const { BasePage } = require('./basePage');
 class ProfilePage extends BasePage {
   constructor(page) {
     super(page);
-    this.firstNameField = page.locator('[data-test="first-name"], #first-name, input[name="first_name"]');
-    this.lastNameField = page.locator('[data-test="last-name"], #last-name, input[name="last_name"]');
-    this.emailField = page.locator('[data-test="email"], #email, input[name="email"]');
+    this.firstNameField = page.getByLabel(/first name/i);
+    this.lastNameField = page.getByLabel(/last name/i);
+    this.emailField = page.getByLabel(/email/i);
+    this.pageTitle = page.getByTestId('page-title');
   }
 
   async open() {

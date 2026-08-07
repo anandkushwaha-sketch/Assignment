@@ -3,12 +3,20 @@ const { BasePage } = require('./basePage');
 class RegisterPage extends BasePage {
   constructor(page) {
     super(page);
-    this.firstNameInput = page.getByRole('textbox', { name: /first name/i });
-    this.lastNameInput = page.getByRole('textbox', { name: /last name/i });
-    this.emailInput = page.getByRole('textbox', { name: /email/i });
-    this.passwordInput = page.getByRole('textbox', { name: /^password$/i });
-    this.dobInput = page.locator('input[type="date"], input[name*="dob"], #dob').first();
+    this.firstNameInput = page.getByLabel(/first name/i);
+    this.lastNameInput = page.getByLabel(/last name/i);
+    this.emailInput = page.getByLabel(/email/i);
+    this.passwordInput = page.getByLabel(/^password$/i);
+    this.dobInput = page.getByLabel(/date of birth|dob/i);
+    this.phoneInput = page.getByLabel(/phone/i);
+    this.streetInput = page.getByLabel(/street/i);
+    this.houseNumberInput = page.getByLabel(/house number|house no/i);
+    this.cityInput = page.getByLabel(/city/i);
+    this.stateInput = page.getByLabel(/state/i);
+    this.countryInput = page.getByLabel(/country/i);
+    this.postalCodeInput = page.getByLabel(/postal|zip/i);
     this.registerButton = page.getByRole('button', { name: /register/i });
+    this.successAlert = page.getByRole('alert');
   }
 
   async open() {
@@ -22,8 +30,36 @@ class RegisterPage extends BasePage {
     await this.emailInput.fill(user.email);
     await this.passwordInput.fill(user.password);
 
-    if (await this.dobInput.isVisible().catch(() => false)) {
+    if (await this.dobInput.isVisible()) {
       await this.dobInput.fill(user.dob);
+    }
+
+    if (await this.phoneInput.isVisible()) {
+      await this.phoneInput.fill(user.phone);
+    }
+
+    if (await this.streetInput.isVisible()) {
+      await this.streetInput.fill(user.address.street);
+    }
+
+    if (await this.houseNumberInput.isVisible()) {
+      await this.houseNumberInput.fill(user.address.house_number);
+    }
+
+    if (await this.cityInput.isVisible()) {
+      await this.cityInput.fill(user.address.city);
+    }
+
+    if (await this.stateInput.isVisible()) {
+      await this.stateInput.fill(user.address.state);
+    }
+
+    if (await this.countryInput.isVisible()) {
+      await this.countryInput.fill(user.address.country);
+    }
+
+    if (await this.postalCodeInput.isVisible()) {
+      await this.postalCodeInput.fill(user.address.postal_code);
     }
 
     await this.registerButton.click();
